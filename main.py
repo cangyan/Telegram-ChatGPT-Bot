@@ -1,14 +1,15 @@
 import logging
 import time
+import os
 from aiogram import Bot, Dispatcher, executor, types
 import openai
 
-bot_token = 'TOKEN'
-api_key = 'TOKEN PLS'
+bot_token = os.getenv('BOT_TOKEN')
+api_key = os.getenv('API_KEY')
 
 logging.basicConfig(level=logging.INFO)
 
-bot = Bot(token=bot_token)
+bot = Bot(token=bot_token) # type: ignore
 dp = Dispatcher(bot)
 
 openai.api_key = api_key
@@ -54,7 +55,7 @@ async def echo_msg(message: types.Message):
             presence_penalty=0,
             user=username
         )
-        chatgpt_response = completion.choices[0]['message']
+        chatgpt_response = completion.choices[0]['message'] # type: ignore
         messages[username].append({"role": "assistant", "content": chatgpt_response['content']})
         logging.info(f'ChatGPT response: {chatgpt_response["content"]}')
         await message.reply(chatgpt_response['content'], parse_mode='Markdown')
