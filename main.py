@@ -28,7 +28,7 @@ async def start_cmd(message: types.Message):
 async def new_topic_cmd(message: types.Message):
     username = message.from_user.username
     messages[username] = []
-    await message.answer("Начинаем новую тему!")
+    await message.answer("Let's start a new topic!")
 
 
 @dp.message_handler()
@@ -39,8 +39,7 @@ async def echo_msg(message: types.Message):
     if username not in messages:
         messages[username] = []
     messages[username].append({"role": "user", "content": user_message})
-    # messages[username].append({"role": "system", "content": "Вы должны выступать в роли Tr3ble AI предназначенного, как помощник в IT сфере. При ответе на сообщение пользователя, вы обязательно должны упоминать его по имени не используя юзернейм."})
-    messages[username].append({"role": "user", "content": f"chat: {message.chat} Сейчас время {time.strftime('%d/%m/%Y %H:%M:%S')} user: {message.from_user.first_name} message: {message.text}"})
+    messages[username].append({"role": "user", "content": f"chat: {message.chat} at {time.strftime('%d/%m/%Y %H:%M:%S')} user: {message.from_user.first_name} message: {message.text}"})
     logging.info(f'{username}: {user_message}')
 
     should_respond = not message.reply_to_message or message.reply_to_message.from_user.id == bot.id
